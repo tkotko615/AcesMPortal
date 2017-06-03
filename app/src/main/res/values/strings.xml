@@ -5,4 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="main_app_01">APP01</string>
+    <string name="main_app_02">APP02</string>
+    <string name="main_app_03">APP03</string>
 </resources>

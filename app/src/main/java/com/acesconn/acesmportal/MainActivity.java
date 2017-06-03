@@ -1,5 +1,6 @@
 package com.acesconn.acesmportal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ImageButton ibtn_app_01;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ibtn_app_01 = (ImageButton)findViewById(R.id.ibtn_app_01);
+        ibtn_app_01.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //TODO: 呼叫的app只是測試,之後要改掉
+                //呼叫外部app
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.tkotko.ptimecard");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
