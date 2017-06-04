@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,10 +56,14 @@ public class MainActivity extends AppCompatActivity
         ibtn_app_01.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //TODO: 呼叫的app只是測試,之後要改掉
-                //呼叫外部app
-                Intent intent = getPackageManager().getLaunchIntentForPackage("com.tkotko.ptimecard");
-                startActivity(intent);
+                //TODO: 測試中,之後要改掉
+                //測試呼叫外部app
+                //Intent intent = getPackageManager().getLaunchIntentForPackage("com.tkotko.ptimecard");
+                //startActivity(intent);
+
+                //通訊錄
+                Intent i = new Intent(MainActivity.this,ContactsActivity.class);
+                startActivity(i);
             }
         });
     }

@@ -9,4 +9,6 @@
     <string name="main_app_01">APP01</string>
     <string name="main_app_02">APP02</string>
     <string name="main_app_03">APP03</string>
+
+    <string name="act_title_contacts">通訊錄</string>
 </resources>
