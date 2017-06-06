@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "982275587722",
+    "firebase_url": "https://acesmportal.firebaseio.com",
+    "project_id": "acesmportal",
+    "storage_bucket": "acesmportal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:982275587722:android:7ca43475cce5975a",
+        "android_client_info": {
+          "package_name": "com.acesconn.acesmportal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "982275587722-06h0pjbgv7fhqkkgb2vjusalkusivlrq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.acesconn.acesmportal",
+            "certificate_hash": "8e178ac1211d238141cd22f2a70bc58b591e7962"
+          }
+        },
+        {
+          "client_id": "982275587722-7r5qn8ve75abr652fq2nhvuiod264695.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVEn2oH7vrww8qL-_3vrbJripfxEHcmAc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "982275587722-7r5qn8ve75abr652fq2nhvuiod264695.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
