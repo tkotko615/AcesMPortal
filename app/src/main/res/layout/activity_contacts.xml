@@ -3,11 +3,28 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_getContacts"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="查詢通訊錄" />
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edt_query"
+            android:layout_weight="0.8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="輸入關鍵字" />
+
+        <Button
+            android:id="@+id/btn_getContacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查詢" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_Contacts"
