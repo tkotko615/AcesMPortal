@@ -16,7 +16,7 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/phone_ext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/name"
@@ -25,6 +25,18 @@
         android:layout_toEndOf="@+id/name"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/name"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:text="TextView" />
 
 </RelativeLayout>

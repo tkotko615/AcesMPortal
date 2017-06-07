@@ -42,7 +42,7 @@ public class ContactsActivity extends AppCompatActivity {
         //aryAdapter = new ArrayAdapter<>(ContactsActivity.this,android.R.layout.simple_list_item_1,android.R.id.text1);
         //lv_contacts.setAdapter(aryAdapter);
         //自定Listview
-        this.adapter = new SimpleAdapter(ContactsActivity.this, arraylist, R.layout.list_contacts, new String[] {"name","email"}, new int[] {R.id.name, R.id.email});
+        this.adapter = new SimpleAdapter(ContactsActivity.this, arraylist, R.layout.list_contacts, new String[] {"name","phone_ext","email"}, new int[] {R.id.name, R.id.phone_ext,R.id.email});
         lv_contacts.setAdapter(adapter);
 
         database =DatabaseUtil.getDatabase();
@@ -80,187 +80,65 @@ public class ContactsActivity extends AppCompatActivity {
                 });
                 */
                 //FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("contacts");
+                //DatabaseReference myRef = database.getReference("contacts");
+                arraylist.clear();
 
-                // Read from the database
+                //查詢
                 if (edt_query.getText().toString().equals("")){
-                    myRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            arraylist.clear();
-                            for (DataSnapshot ds :dataSnapshot.getChildren()){
-                                //aryAdapter.add(ds.child("name").getValue().toString());
-
-                                HashMap<String, String> item = new HashMap<>();
-                                if (ds.child("name").exists()){
-                                    item.put("name", ds.child("name").getValue().toString());
-                                }
-                                if (ds.child("email").exists()){
-                                    item.put("email", ds.child("email").getValue().toString());
-                                }
-                                if (item.size() > 0){
-                                    arraylist.add(item);
-                                }
-                            }
-                            adapter.notifyDataSetChanged();
-                            Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
-                    });
+                    //未下關鍵字
+                    get_query("");
                 }else {
-                    //查詢 name
-                    Query queryRef = myRef.orderByChild("name").equalTo(edt_query.getText().toString());
-                    queryRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            arraylist.clear();
-                            for (DataSnapshot ds :dataSnapshot.getChildren()){
-                                //aryAdapter.add(ds.child("name").getValue().toString());
-
-                                HashMap<String, String> item = new HashMap<>();
-                                if (ds.child("name").exists()){
-                                    item.put("name", ds.child("name").getValue().toString());
-                                }
-                                if (ds.child("email").exists()){
-                                    item.put("email", ds.child("email").getValue().toString());
-                                }
-                                if (item.size() > 0){
-                                    arraylist.add(item);
-                                }
-                            }
-                            /*
-                            adapter.notifyDataSetChanged();
-                            Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                            */
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
-                    });
-
-                    //查詢 email
-                    queryRef = myRef.orderByChild("email").equalTo(edt_query.getText().toString());
-                    queryRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            //arraylist.clear();
-                            for (DataSnapshot ds :dataSnapshot.getChildren()){
-                                //aryAdapter.add(ds.child("name").getValue().toString());
-
-                                HashMap<String, String> item = new HashMap<>();
-                                if (ds.child("name").exists()){
-                                    item.put("name", ds.child("name").getValue().toString());
-                                }
-                                if (ds.child("email").exists()){
-                                    item.put("email", ds.child("email").getValue().toString());
-                                }
-                                if (item.size() > 0){
-                                    arraylist.add(item);
-                                }
-                            }
-                            adapter.notifyDataSetChanged();
-                            Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
-                    });
+                    //以關鍵字依序搜尋各欄位
+                    get_query("name");
+                    get_query("lastname");
+                    get_query("phone_ext");
+                    get_query("email");
 
                 }
-
-                /*
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        //aryAdapter.clear();
-                        arraylist.clear();
-                        for (DataSnapshot ds :dataSnapshot.getChildren()){
-                            //aryAdapter.add(ds.child("name").getValue().toString());
-
-                            HashMap<String, String> item = new HashMap<>();
-                            if (ds.child("name").exists()){
-                                item.put("name", ds.child("name").getValue().toString());
-                            }
-                            if (ds.child("email").exists()){
-                                item.put("email", ds.child("email").getValue().toString());
-                            }
-                            if (item.size() > 0){
-                                arraylist.add(item);
-                            }
-                        }
-                        if (arraylist.size() > 0){
-                            adapter.notifyDataSetChanged();
-                            Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        //Log.w(TAG, "Failed to read value.", error.toException());
-                        Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-
-                    }
-                });
-                */
-
-                /*
-                Query queryRef = myRef.orderByChild("name").equalTo("吳育維");
-                queryRef.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                        //Log.v("dataSnapshot",dataSnapshot.toString());
-
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-
-
-                });
-                */
             }
         });
 
+    }
+
+    //查詢
+    private void get_query(String child){
+        DatabaseReference myRef = database.getReference("contacts");
+        Query queryRef;
+        if (child.equals("")){
+            queryRef = myRef;
+        }else {
+            queryRef = myRef.orderByChild(child).equalTo(edt_query.getText().toString());
+        }
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds :dataSnapshot.getChildren()){
+                    HashMap<String, String> item = new HashMap<>();
+                    if (ds.child("name").exists()){
+                        item.put("name", ds.child("name").getValue().toString());
+                    }
+                    if (ds.child("phone_ext").exists()){
+                        item.put("phone_ext", ds.child("phone_ext").getValue().toString());
+                    }
+                    if (ds.child("email").exists()){
+                        item.put("email", ds.child("email").getValue().toString());
+                    }
+                    if (item.size() > 0){
+                        arraylist.add(item);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
 }
