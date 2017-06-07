@@ -83,13 +83,109 @@ public class ContactsActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("contacts");
 
                 // Read from the database
+                if (edt_query.getText().toString().equals("")){
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            arraylist.clear();
+                            for (DataSnapshot ds :dataSnapshot.getChildren()){
+                                //aryAdapter.add(ds.child("name").getValue().toString());
 
-                //Query queryRef = myRef;
-                if (!edt_query.getText().toString().equals("")){
-                    myRef.orderByChild("name").equalTo(edt_query.getText().toString());
+                                HashMap<String, String> item = new HashMap<>();
+                                if (ds.child("name").exists()){
+                                    item.put("name", ds.child("name").getValue().toString());
+                                }
+                                if (ds.child("email").exists()){
+                                    item.put("email", ds.child("email").getValue().toString());
+                                }
+                                if (item.size() > 0){
+                                    arraylist.add(item);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+                }else {
+                    //查詢 name
+                    Query queryRef = myRef.orderByChild("name").equalTo(edt_query.getText().toString());
+                    queryRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            arraylist.clear();
+                            for (DataSnapshot ds :dataSnapshot.getChildren()){
+                                //aryAdapter.add(ds.child("name").getValue().toString());
+
+                                HashMap<String, String> item = new HashMap<>();
+                                if (ds.child("name").exists()){
+                                    item.put("name", ds.child("name").getValue().toString());
+                                }
+                                if (ds.child("email").exists()){
+                                    item.put("email", ds.child("email").getValue().toString());
+                                }
+                                if (item.size() > 0){
+                                    arraylist.add(item);
+                                }
+                            }
+                            /*
+                            adapter.notifyDataSetChanged();
+                            Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            */
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+
+                    //查詢 email
+                    queryRef = myRef.orderByChild("email").equalTo(edt_query.getText().toString());
+                    queryRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            //arraylist.clear();
+                            for (DataSnapshot ds :dataSnapshot.getChildren()){
+                                //aryAdapter.add(ds.child("name").getValue().toString());
+
+                                HashMap<String, String> item = new HashMap<>();
+                                if (ds.child("name").exists()){
+                                    item.put("name", ds.child("name").getValue().toString());
+                                }
+                                if (ds.child("email").exists()){
+                                    item.put("email", ds.child("email").getValue().toString());
+                                }
+                                if (item.size() > 0){
+                                    arraylist.add(item);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            Snackbar.make(btn_getContacts, "資料筆數: "+ arraylist.size() , Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Snackbar.make(btn_getContacts, "Failed to read value." + error.getMessage(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+
                 }
-                //queryRef.addValueEventListener(new ValueEventListener() {
 
+                /*
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -127,6 +223,7 @@ public class ContactsActivity extends AppCompatActivity {
 
                     }
                 });
+                */
 
                 /*
                 Query queryRef = myRef.orderByChild("name").equalTo("吳育維");
