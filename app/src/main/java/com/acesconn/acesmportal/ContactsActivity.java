@@ -107,7 +107,12 @@ public class ContactsActivity extends AppCompatActivity {
         if (child.equals("")){
             queryRef = myRef;
         }else {
-            queryRef = myRef.orderByChild(child).equalTo(edt_query.getText().toString());
+            if (child.equals("phone_ext")){
+                queryRef = myRef.orderByChild(child).startAt(edt_query.getText().toString()).endAt(edt_query.getText().toString()+"\uf8ff");
+            }else{
+                queryRef = myRef.orderByChild(child).equalTo(edt_query.getText().toString());
+            }
+
         }
         queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
