@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity
         String z = "";
         Boolean isSuccess = false;
         String comp_id = "FORMAL_TW";
+        String user_id = "t01123";
         @Override
         protected void onPreExecute() {
             pbbar.setVisibility(View.VISIBLE);
@@ -168,6 +169,7 @@ public class MainActivity extends AppCompatActivity
                         z = "Error in connection with SQL server";
                     } else {
                         String query = "select * from stage.d_company where comp_id='" + comp_id + "'";
+                        //String query = "select * from dbo.UserInRole where UserID='" + user_id + "'";
                         Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
 
