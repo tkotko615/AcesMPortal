@@ -1,6 +1,7 @@
 package com.acesconn.acesmportal;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,10 +25,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageButton ibtn_app_01;
+    ConnectionClass connectionClass;
+    ProgressBar pbbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +43,18 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        connectionClass = new ConnectionClass();
+        pbbar = (ProgressBar) findViewById(R.id.pbbar);
+        pbbar.setVisibility(View.GONE);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+                SqlServerQry doQuery = new SqlServerQry();
+                doQuery.execute("");
             }
         });
 
@@ -124,4 +139,56 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public class SqlServerQry extends AsyncTask<String,String,String>{
+        String z = "";
+        Boolean isSuccess = false;
+        String comp_id = "FORMAL_TW";
+        @Override
+        protected void onPreExecute() {
+            pbbar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String r) {
+            pbbar.setVisibility(View.GONE);
+            Toast.makeText(MainActivity.this,r,Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params){
+            if (comp_id.trim().equals("")) {
+                z = "Please enter Comp. Id";
+            }
+            else {
+                try {
+                    Connection con = connectionClass.CONN();
+                    if (con == null) {
+                        z = "Error in connection with SQL server";
+                    } else {
+                        String query = "select * from stage.d_company where comp_id='" + comp_id + "'";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(query);
+
+                        if (rs.next()) {
+
+                            //z = "Query successfull";
+                            z = rs.getString(3);
+                            isSuccess = true;
+                        } else {
+                            z = "Query Fail";
+                            isSuccess = false;
+                        }
+
+                    }
+                } catch (Exception ex) {
+                    isSuccess = false;
+                    z = "Exceptions";
+                }
+            }
+            return z;
+        }
+    }
+
 }
