@@ -168,8 +168,9 @@ public class MainActivity extends AppCompatActivity
                     if (con == null) {
                         z = "Error in connection with SQL server";
                     } else {
-                        String query = "select * from stage.d_company where comp_id='" + comp_id + "'";
+                        //String query = "select * from stage.d_company where comp_id='" + comp_id + "'";
                         //String query = "select * from dbo.UserInRole where UserID='" + user_id + "'";
+                        String query = "select * from dbo.webNews where no = 1";
                         Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
 

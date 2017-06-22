@@ -8,21 +8,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConnectionClass {
-    //BI主機
+    /*BI主機
     String ip = "192.168.0.58";
     String classs = "net.sourceforge.jtds.jdbc.Driver";
     String db = "stage";
     String un = "sa";
     String password = "sql#DSC";
+*/
 
-    /*
     //外網
-    String ip = "192.168.0.147";
+    String ip = "www.acesconn.com";
     String classs = "net.sourceforge.jtds.jdbc.Driver";
-    String db = "ProductList";
-    String un = "mis";
-    String password = "cj/654";
-    */
+    String db = "acesmis";
+    String un = "sa";
+    String password = "aces1234";
+
 
     @SuppressLint("NewApi")
     public Connection CONN() {
