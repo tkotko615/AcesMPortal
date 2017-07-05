@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageButton ibtn_app_01;
+    ImageButton ibtn_app_02;
     ConnectionClass connectionClass;
     ProgressBar pbbar;
 
@@ -76,8 +77,18 @@ public class MainActivity extends AppCompatActivity
                 //Intent intent = getPackageManager().getLaunchIntentForPackage("com.tkotko.ptimecard");
                 //startActivity(intent);
 
-                //通訊錄
+                //通訊錄(Firebase)
                 Intent i = new Intent(MainActivity.this,ContactsActivity.class);
+                startActivity(i);
+            }
+        });
+
+        ibtn_app_02 = (ImageButton)findViewById(R.id.ibtn_app_02);
+        ibtn_app_02.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //通訊錄(WebAPI)
+                Intent i = new Intent(MainActivity.this,ContactAPIActivity.class);
                 startActivity(i);
             }
         });

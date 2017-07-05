@@ -38,12 +38,20 @@
         android:id="@+id/ibtn_app_02"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        app:srcCompat="@drawable/ic_menu_gallery"
-        android:contentDescription="@string/main_app_02"
+        app:srcCompat="@drawable/app_contacts"
+        android:scaleType="centerInside"
+        android:contentDescription="@string/act_title_contactapi"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/ibtn_app_01"
         android:layout_marginStart="0.5dp"
         android:layout_marginLeft="0.5dp"/>
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="@string/act_title_contactapi"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/ibtn_app_02"
+        app:layout_constraintLeft_toRightOf="@+id/ibtn_app_01" />
 
     <ImageButton
         android:id="@+id/ibtn_app_03"

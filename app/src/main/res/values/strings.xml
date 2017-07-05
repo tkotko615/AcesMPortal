@@ -10,5 +10,6 @@
     <string name="main_app_02">APP02</string>
     <string name="main_app_03">APP03</string>
 
-    <string name="act_title_contacts">通訊錄</string>
+    <string name="act_title_contacts">通訊錄(Firebase)</string>
+    <string name="act_title_contactapi">通訊錄(WebAPI)</string>
 </resources>

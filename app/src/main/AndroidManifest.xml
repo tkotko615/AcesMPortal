@@ -26,9 +26,15 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <!--通訊錄-->
+        <!--通訊錄(Firebase)-->
         <activity android:name=".ContactsActivity"
             android:label="@string/act_title_contacts"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
+        <!--通訊錄(WebAPI)-->
+        <activity android:name=".ContactAPIActivity"
+            android:label="@string/act_title_contactapi"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="stateHidden">
         </activity>
