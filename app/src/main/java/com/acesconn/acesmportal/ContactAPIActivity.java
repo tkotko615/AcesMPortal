@@ -5,16 +5,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class ContactAPIActivity extends AppCompatActivity {
@@ -22,6 +28,8 @@ public class ContactAPIActivity extends AppCompatActivity {
     Button btn_getContacts;
     ListView lv_contacts;
     ProgressBar progressBar;
+    private ArrayAdapter<String> listAdapter;
+    private ArrayList<String> assetsList= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +50,13 @@ public class ContactAPIActivity extends AppCompatActivity {
         });
     }
 
-    class WebAPIQry extends AsyncTask<Void, Void, String> {
-
-        private Exception exception;
+    private class WebAPIQry extends AsyncTask<Void, Void, String> {
 
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
         }
 
         protected String doInBackground(Void... urls) {
-            //String email = emailText.getText().toString();
             String API_URL = "http://exweb.acesconn.com/AcesAPI/api/contacts";
             // Do some validation here
 
@@ -85,8 +90,24 @@ public class ContactAPIActivity extends AppCompatActivity {
             }
             progressBar.setVisibility(View.GONE);
             Log.i("INFO", response);
-            //responseView.setText(response);
-            Toast.makeText(ContactAPIActivity.this,response,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ContactAPIActivity.this,response,Toast.LENGTH_LONG).show();
+
+            assetsList.clear();
+            try {
+                JSONArray ar = new JSONArray(response);
+                for (int i=0; i<ar.length(); i++){
+                    JSONObject jobj = ar.getJSONObject(i);
+                    assetsList.add(jobj.getString("user_name")
+                            +"   "+jobj.getString("phone_ext")
+                            +"   "+jobj.getString("email"));
+                }
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+            listAdapter = new ArrayAdapter<>(ContactAPIActivity.this,android.R.layout.simple_list_item_1,assetsList);
+            lv_contacts.setAdapter(listAdapter);
+
         }
     }
 
